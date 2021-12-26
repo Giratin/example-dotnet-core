@@ -13,7 +13,11 @@ namespace GestionProduit.Infrastuctures
         {
             get { return dataContext; }
         }
-        public DatabaseFactory() { dataContext = new GPContext(); }
+        public DatabaseFactory()
+        {
+            dataContext = new GPContext();
+        }
+
         protected override void DisposeCore()
         {
             if (dataContext != null)

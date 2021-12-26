@@ -3,13 +3,10 @@ using GestionProduit.Models;
 
 namespace GestionProduit.Repositories
 {
-    public interface IProductRepo
+    public interface IProductRepo : IService<Product>
     {
-        IEnumerable<Product> getAll();
-        Product getById(int id);
-        bool createProduct(Product product);
-        void createNewProduct(Product product);
-        IEnumerable<Product> getList();
+        //signatures des méthodes spécifiques (sauf CRUD)
         IEnumerable<Product> getByCategoryId(int id);
+        IEnumerable<Product> Get5ProductsByCayegory(string catname);
     }
 }

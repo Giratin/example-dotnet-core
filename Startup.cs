@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GestionProduit.Infrastuctures;
+using GestionProduit.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,15 @@ namespace GestionProduit
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
+
+            services
+               .AddScoped<ICategoryRepo, CategoryRepo>()
+               .AddScoped<IProductRepo, ProductRespo>()
+               .AddTransient<IUnitOfWork, UnitOfWork>()
+               .AddSingleton<IDatabaseFactory, DatabaseFactory>()
+               .BuildServiceProvider();
+
             services.AddControllers();
         }
 

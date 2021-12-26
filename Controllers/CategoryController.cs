@@ -12,9 +12,11 @@ namespace GestionProduit.Controllers
     // [Route("/api/categories")]
     public class CategoryController : ControllerBase
     {
-        private readonly IProductRepo _productRepo = new ProductRespo();
-        public CategoryController()
-        { }
+        private readonly IProductRepo _productRepo;
+        public CategoryController(IProductRepo productRepo)
+        {
+            _productRepo = productRepo;
+        }
 
         // [HttpGet]
         // [Route("/")]

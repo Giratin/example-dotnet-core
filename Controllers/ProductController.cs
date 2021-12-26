@@ -10,17 +10,17 @@ namespace GestionProduit.Controllers
     [Route("api/products")]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepo _productRepo = new ProductRespo();
-        public ProductController()//(IProductRepo _productRepo)
+        private readonly IProductRepo _productRepo;
+        public ProductController(IProductRepo _productRepo)
         {
-            // this._productRepo = _productRepo;
+            this._productRepo = _productRepo;
         }
 
         [HttpGet]
         [Route("")]
         public ActionResult<IEnumerable<Product>> GetAllProducts()
         {
-            return Ok(_productRepo.getAll());
+            return Ok(_productRepo.GetAll());
         }
 
 
@@ -41,15 +41,15 @@ namespace GestionProduit.Controllers
         [HttpPost]
         public ActionResult CreateNewProduct([FromBody] Product product)
         {
-            var response = _productRepo.createProduct(product);
-            return Ok(_productRepo.getAll());
+            _productRepo.Add(product);
+            return Ok(_productRepo.GetAll());
         }
         [HttpPost]
         [Route("create")]
         public ActionResult CreateDbProduct([FromBody] Product product)
         {
-            _productRepo.createNewProduct(product);
-            return Ok(_productRepo.getList());
+            _productRepo.Add(product);
+            return Ok(_productRepo.GetAll());
         }
 
 
@@ -57,7 +57,7 @@ namespace GestionProduit.Controllers
         [Route("{id}")]
         public ActionResult<Product> GetProductById(int id)
         {
-            var product = _productRepo.getById(id);
+            var product = _productRepo.GetById(id);
             if (product != null)
             {
                 return Ok(product);

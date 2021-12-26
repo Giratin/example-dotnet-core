@@ -9,64 +9,68 @@ namespace GestionProduit.Repositories
     {
         private readonly IUnitOfWork utk;
 
-        public Service(IUnitOfWork _utk)
+        public Service(IUnitOfWork utk)
         {
-            this.utk = _utk;
+            this.utk = utk;
         }
-
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            utk.getRepository<T>().Add(entity);
         }
 
-        public void Commit()
+        public virtual void Commit()
         {
-            throw new NotImplementedException();
+            utk.Commit();
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
-            throw new NotImplementedException();
+            utk.getRepository<T>().Delete(entity);
         }
 
-        public void Delete(System.Linq.Expressions.Expression<Func<T, bool>> condition)
+        public void Delete(Expression<Func<T, bool>> condition)
         {
-            throw new NotImplementedException();
+            utk.getRepository<T>().Delete(condition);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            utk.Dispose();
         }
 
-        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> condition)
+        public T Get(Expression<Func<T, bool>> condition)
         {
-            throw new NotImplementedException();
+            return utk.getRepository<T>().Get(condition);
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return utk.getRepository<T>().GetAll();
         }
 
         public T GetById(long id)
         {
-            throw new NotImplementedException();
+            return utk.getRepository<T>().GetById(id);
+        }
+
+        public T GetById(string id)
+        {
+            return utk.getRepository<T>().GetById(id);
         }
 
         public T GetById(int id)
         {
-            throw new NotImplementedException();
+            return utk.getRepository<T>().GetById(id);
         }
 
-        public IEnumerable<T> GetMany(System.Linq.Expressions.Expression<Func<T, bool>> condition)
+        public IEnumerable<T> GetMany(Expression<Func<T, bool>> condition)
         {
-            throw new NotImplementedException();
+            return utk.getRepository<T>().GetMany(condition);
         }
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            utk.getRepository<T>().Update(entity);
         }
     }
 }
