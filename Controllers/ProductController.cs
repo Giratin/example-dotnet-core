@@ -1,0 +1,70 @@
+using System.Collections.Generic;
+using GestionProduit.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using GestionProduit.Models;
+using System.Linq;
+
+namespace GestionProduit.Controllers
+{
+    [ApiController]
+    [Route("api/products")]
+    public class ProductController : ControllerBase
+    {
+        private readonly IProductRepo _productRepo = new ProductRespo();
+        public ProductController()//(IProductRepo _productRepo)
+        {
+            // this._productRepo = _productRepo;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public ActionResult<IEnumerable<Product>> GetAllProducts()
+        {
+            return Ok(_productRepo.getAll());
+        }
+
+
+
+        [HttpGet]
+        [Route("category/{id}")]
+        public ActionResult<Product> GetProductsByCategoryId(int id)
+        {
+            var products = _productRepo.getByCategoryId(id);
+            if (products.Count() > 0)
+            {
+                return Ok(products);
+            }
+            return NotFound(new { message = "Products not found" });
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateNewProduct([FromBody] Product product)
+        {
+            var response = _productRepo.createProduct(product);
+            return Ok(_productRepo.getAll());
+        }
+        [HttpPost]
+        [Route("create")]
+        public ActionResult CreateDbProduct([FromBody] Product product)
+        {
+            _productRepo.createNewProduct(product);
+            return Ok(_productRepo.getList());
+        }
+
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<Product> GetProductById(int id)
+        {
+            var product = _productRepo.getById(id);
+            if (product != null)
+            {
+                return Ok(product);
+            }
+            return NotFound(new { message = "Product not found" });
+        }
+
+
+    }
+}
